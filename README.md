@@ -327,7 +327,7 @@ client2:$NETNTLM$1fff09f40a612c88$a2adb54c1af413a7e8164295a7e8462443f6c5030672d4
 client3:$NETNTLM$279ed68695cdff89$20f8792e8ed7387b48ec8e442b180e66fcdc05866444407d
 ```
 
-Con esto, sumado a un diccionario de posibles claves como el usado en el capítulo [`WPA/WPA2-PSK`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-PSK), `/usr/share/wordlists/rockyou.txt`, se puede lanzar la herramienta de crackeo con objeto de obtener las contraseñas reales de los usuarios capturados:
+Con esto, sumado a un diccionario de posibles claves como el usado en el capítulo [`WPA/WPA2-PSK`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-PSK), `/usr/share/wordlists/rockyou.txt`, se puede lanzar la herramienta de crackeo con objeto de obtener las contraseñas reales de los usuarios capturados:
 ```
 # Lanzar la herramienta
 john --wordlist=/usr/share/wordlists/rockyou.txt --format=netntlm hashes.txt
@@ -341,7 +341,7 @@ Con esto se obtienen las claves y es posible conectarse al dispositivo legítimo
 <img width="712" height="792" alt="image" src="https://github.com/user-attachments/assets/fef0146f-b265-4bd5-ae49-6f29b0268e0f" />
 
 
-`Recordatorio: ` Se aconseja también repetir los [ataques](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks) realizados tras conseguir acceso con la configuración de este capítulo para ver que una vez dentro la seguridad elegida en el punto de acceso es irrelevante, permitiendo así los mismos resultados. 
+`Recordatorio: ` Se aconseja también repetir los [ataques](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks) realizados tras conseguir acceso con la configuración de este capítulo para ver que una vez dentro la seguridad elegida en el punto de acceso es irrelevante, permitiendo así los mismos resultados. 
 
 ### Contramedidas y recomendaciones
 La mejor forma de parar este tipo de ataque es revisando tanto los dispositivos clientes como el dispositivo que actúa como punto de acceso, de tal forma que se ajusten correctamente sus configuraciones en lugar de usar las que vienen por defecto. De nada sirve una autenticación tan robusta si se dejan pequeños detalles que conllevan a ataques como el recién visto. Es así que lo ideal sería ajustar correctamente configuraciones como solo aceptar certificados firmados por una Autoridad de Certificación (`CA` por sus siglas en inglés), en lugar de cualquier otro certificado. Esto hace que se pueda identificar inequívocamente el punto de acceso legítimo, evitando así la conexión a puntos de acceso falsos que busquen obtener nuestras credenciales. Además, puede resultar interesante añadir protecciones similares en el punto de acceso para evitar la conexión de clientes no válidos.
@@ -363,11 +363,11 @@ network={
 }
 ```
 
-Para hacer que esto funcione correctamente se aconseja reiniciar el laboratorio y repetir el ataque, no sin antes aplicar las configuraciones seguras de `wpa_supplicant` en los clientes (`client-1`, `client-2` y `client-3`). Para ello se accede a [`Dockerfile client12`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-RADIUS/internal/wireless/client12/Dockerfile) para `client-1` y `client-2`, así como a [`Dockerfile client3`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-RADIUS/internal/wireless/client3/Dockerfile) para `client-3`, comentando las configuraciones `wpa_supplicant.conf` originales y descomentando las terminadas en `secure`:
+Para hacer que esto funcione correctamente se aconseja reiniciar el laboratorio y repetir el ataque, no sin antes aplicar las configuraciones seguras de `wpa_supplicant` en los clientes (`client-1`, `client-2` y `client-3`). Para ello se accede a [`Dockerfile client12`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-RADIUS/internal/wireless/client12/Dockerfile) para `client-1` y `client-2`, así como a [`Dockerfile client3`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-RADIUS/internal/wireless/client3/Dockerfile) para `client-3`, comentando las configuraciones `wpa_supplicant.conf` originales y descomentando las terminadas en `secure`:
 <img width="680" height="163" alt="image" src="https://github.com/user-attachments/assets/aad38a2b-3b13-4baf-b7cf-abe1f4c89d04" />
 <img width="575" height="113" alt="image" src="https://github.com/user-attachments/assets/ae4ec66f-ba21-4bf0-b3a4-d64540ffd61e" />
 
-Una vez realizado esto, se lanza de nuevo el laboratorio y el ataque, siguiendo los pasos anteriores (se aconseja descomentar en [`Dockerfile de attacker`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-RADIUS/internal/wireless/attacker/Dockerfile) los `COPY` que copian directamente la configuración de `freeradius-wpe` en la ubicación que esta espera):
+Una vez realizado esto, se lanza de nuevo el laboratorio y el ataque, siguiendo los pasos anteriores (se aconseja descomentar en [`Dockerfile de attacker`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-RADIUS/internal/wireless/attacker/Dockerfile) los `COPY` que copian directamente la configuración de `freeradius-wpe` en la ubicación que esta espera):
 ```
 # Levantar AP y RADIUS falso
 freeradius-wpe -i 127.0.0.1 -p 1812
@@ -404,5 +404,5 @@ cat /var/log/freeradius-wpe/freeradius-server-wpe.log
 
 Con esto se ve una primera configuración que añadiría seguridad, sin embargo, podría reforzarse si se incluye el certificado o un hash que represente únicamente a el servidor RADIUS legítimo.
 
-[`Lección anterior, cracking de redes WPS`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPS)
-[`Siguiente lección, capítulo extra: WPA3 y RogueAP`](https://github.com/Carlosdm06/TFG-Pentesting/tree/RougeAP)
+[`Lección anterior, cracking de redes WPS`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPS)
+[`Siguiente lección, capítulo extra: WPA3 y RogueAP`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/RougeAP)
