@@ -102,7 +102,7 @@ Este script en líneas generales intenta ejecutar un ataque basado en fuerza bru
 
 Por otro lado, el script también hace uso de la herramienta [`wpspin`](https://github.com/drygdryg/wpspin-nim) que proporciona PINs válidos de WPS según la dirección MAC del punto de acceso. Esto es típico en labores de hacking ya que permite reducir de manera inteligente el espacio de búsqueda en ataques de fuerza bruta, haciendo incluso que ataques que a priori puedan parecer inviables, lleguen a ser posibles. 
 
-Empezando por la versión que gestiona correctamente los bloqueos WPS, se aprecia en el [`Dockerfile`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPS/internal/wireless/AP/Dockerfile) de punto de acceso cómo el dispositivo que interpreta al punto de acceso usa el script [`check_locked.sh`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPS/internal/wireless/AP/check_locked.sh) (se aconseja analizar su contenido, así como comprobar que la interfaz que utiliza es la de la máquina correspondiente):
+Empezando por la versión que gestiona correctamente los bloqueos WPS, se aprecia en el [`Dockerfile`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPS/internal/wireless/AP/Dockerfile) de punto de acceso cómo el dispositivo que interpreta al punto de acceso usa el script [`check_locked.sh`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPS/internal/wireless/AP/check_locked.sh) (se aconseja analizar su contenido, así como comprobar que la interfaz que utiliza es la de la máquina correspondiente):
 
 Este script reinicia la herramienta `hostapd` que proporciona la funcionalidad de punto de acceso WiFi, además de recoger el log de este junto a mensajes personalizados en `/var/log/hostapd-wps.log`. Con esto se evita que se quede bloqueado permanentemente tras una serie de intentos, deteniendo así el ataque de fuerza bruta (la clave que usa ha sido escogida a drede entre las últimas que se prueban). Con el uso por defecto de este script al arrancar la máquina y repitiendo el script de ataque desde la máquina Kali, se obtiene el siguiente resultado:
 ```
@@ -128,7 +128,7 @@ cat /var/log/hostapd-wps.log
 <img width="1268" height="817" alt="image" src="https://github.com/user-attachments/assets/5189f0d2-0997-4950-b674-05885c91eb8a" />
 <img width="1282" height="839" alt="image" src="https://github.com/user-attachments/assets/a8bf82da-fe82-4dcc-8abb-b112d36afde1" />
 
-Sin embargo, si se comenta la parte clave del script [`check_locked.sh`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPS/internal/wireless/AP/check_locked.sh) que reinicia el punto de acceso, para hacer un buen manejo de los bloqueos WPS:
+Sin embargo, si se comenta la parte clave del script [`check_locked.sh`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPS/internal/wireless/AP/check_locked.sh) que reinicia el punto de acceso, para hacer un buen manejo de los bloqueos WPS:
 <img width="613" height="66" alt="image" src="https://github.com/user-attachments/assets/c2af9291-0a43-4adc-82c9-0d97fa15a317" />
 
 se obtiene el siguiente resultado:
@@ -144,7 +144,7 @@ Aquí se aprecia como el ataque ya no tiene resultado, ya que se ejecuta un bloq
 ### Contramedidas y Recomendaciones
 De forma que es recomendable evitar facilitar el acceso a los botones o NFC, e incluso evitar directamente estas opciones debido a su gran peligrosidad. Además, para paliar sus efectos, se recomienda usar las últimas versiones de WPS, las cuales cuentan con mitigaciones a estos ataques, por ejemplo, con bloqueos de WPS tras múltiples intentos fallidos, tal y como se ha visto en la fase de ataque. Sin embargo, por norma general se recomienda deshabilitar cualquier método WPS fuera de un entrono controlado, poniendo especial atención en aquellos dispositivos que traen configurada esta tecnología por defecto. Una buena opción de uso es activarlo durante pequeños periodos de tiempo en los que el administrador sea consciente de los clientes que se conectan en ese momento y monitoreando esto a ser posible (e incluso activar alguna iptable que bloquee algún dispositivo que lanza demasiados intentos si el dispositivo no hace bloqueos de WPS tras múltiples intentos fallidos por defecto). 
 
-`Recordatorio: ` Se aconseja repetir los [ataques](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks) realizados tras conseguir acceso con la configuración de este capítulo para ver que una vez dentro la seguridad elegida en el punto de acceso es irelevante, permitiendo así los mismos resultados. 
+`Recordatorio: ` Se aconseja repetir los [ataques](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks) realizados tras conseguir acceso con la configuración de este capítulo para ver que una vez dentro la seguridad elegida en el punto de acceso es irelevante, permitiendo así los mismos resultados. 
 
-[`Lección anterior, cracking de redes WPA/WPA2 PSK`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-PSK)
-[`Siguiente lección, cracking de redes WPA/WPA2 EAP`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPA/WPA2-RADIUS)
+[`Lección anterior, cracking de redes WPA/WPA2 PSK`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-PSK)
+[`Siguiente lección, cracking de redes WPA/WPA2 EAP`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPA/WPA2-RADIUS)
