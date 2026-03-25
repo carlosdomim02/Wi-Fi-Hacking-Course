@@ -153,5 +153,5 @@ Como se aprecia, en ambos casos se obtiene la clave que autoriza el acceso a la 
 ### Contramedidas y recomendaciones
 Como ya se ha mencionado, este protocolo de seguridad está completamente desaconsejado a día de hoy, debido a sus múltiples amenazas. Incluso los nuevos puntos de acceso Wi-Fi ya no suelen incluirlo para evitar exponer a los usuarios que deseen usarlo a conciencia o por desconocimiento. Por tanto, no es necesario aportar ninguna contramedida, ya que lo mejor que se puede hacer es evitar su uso.
 
-[`Volver a la introducción`](https://github.com/Carlosdm06/TFG-Pentesting/tree/main)  
-[`Siguiente lección, ataques tras conseguir acceso`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks)
+[`Volver a la introducción`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/main)  
+[`Siguiente lección, ataques tras conseguir acceso`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks)
