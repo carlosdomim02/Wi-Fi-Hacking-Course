@@ -1,5 +1,7 @@
 # Wireless Pentesting Lab
 
+To see the English version, [click here](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course-English)
+
 ## Introducción
 En esta sección se explicará brevemente el funcionamiento y peculiaridades del laboratorio creado con objeto de poner a prueba lo aprendido durante el siguiente curso sobre hacking de redes inalámbricas. Para una explicación más detallada de la configuración de este laboratorio se recomienda visitar la rama [`config`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/config), donde se hace un mayor hincapié en los distintos detalles del laboratorio.
 
