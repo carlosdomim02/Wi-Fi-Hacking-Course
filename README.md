@@ -1,7 +1,7 @@
 # WPA/WPA2 PSK Cracking Lab
 ## Introducción
 
-Ahora es turno de continuar haciendo pruebas de ataque con la siguiente versión del protocolo de seguridad que surge después de que la IEEE se diese cuenta de sus fallas y propusiese dos algoritmos para sustituir al antiguo WEP: WPA de forma temporal y WPA2 como versión definitiva. Además, se seguirá la misma metodología que en el ataque a [WEP](https://github.com/Carlosdm06/TFG-Pentesting/tree/WEP), comentando primero el funcionamiento del protocolo WPA/WPA2 PSK, seguido del ataque como tal, así como las respectivas recomendaciones y contramedidas.
+Ahora es turno de continuar haciendo pruebas de ataque con la siguiente versión del protocolo de seguridad que surge después de que la IEEE se diese cuenta de sus fallas y propusiese dos algoritmos para sustituir al antiguo WEP: WPA de forma temporal y WPA2 como versión definitiva. Además, se seguirá la misma metodología que en el ataque a [WEP](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WEP), comentando primero el funcionamiento del protocolo WPA/WPA2 PSK, seguido del ataque como tal, así como las respectivas recomendaciones y contramedidas.
 
 ## Protocolos de Seguridad WPA/WPA2 PSK
 
@@ -97,12 +97,12 @@ aircrack-ng -w /usr/share/wordlists/rockyou.txt -b 02:00:00:00:00:00 wpa-wpa2*.c
 Como se aprecia, este comando también necesita de un diccionario o lista de claves que pueda probar. Aquí es típico probar tanto aquellas listas recopiladas de Internet con claves típicas en general, como aquellas con claves por defecto de alguna compañía telefónica. Por tanto, se recomienda elegir aquella que se ajuste mejor a las necesidades de cada ataque. En el caso de este curso se usa una lista de Kali Linux con claves típicas que suele ser usada en combinación con `aircrack-ng` para acelerar el ataque:
 - `rockyou.txt`: se trata de una lista típica de [`Kali Linux`](https://www.kali.org/tools/wordlists/).
 
-Tras esto se obtiene la clave deseada, lo cual da acceso a la red interna (en específico a la parte WLAN), lo cual tiene graves consecuencias como se vio en el capítulo [anterior](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks):
+Tras esto se obtiene la clave deseada, lo cual da acceso a la red interna (en específico a la parte WLAN), lo cual tiene graves consecuencias como se vio en el capítulo [anterior](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks):
 ![image](https://github.com/user-attachments/assets/f29039c0-92b8-4106-bd58-c441fc656040)
 
 `Nota:` Puede que algún paquete del proceso 4-wayhandshake no haya sido capturado correctamente y que esto genere un error al ejecutar esta última parte del ataque, lo cual provoca que haya que repetir la captura deseando tener más suerte.
 
-Por último, se recomienda repetir el ataque modificando el fichero [`Dockerfile`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-PSK/internal/wireless/AP/Dockerfile) para cambiar la configuración actual que usa el protocolo WPA2 (el más robusto de los dos) comentando la línea que hace referencia al archivo `hostapd.conf` con la versión WPA2 y descomentando la referente a WPA (y relanzar el laboratorio para fijar esta modificación). Esto se hace con el objetivo de probar que el vector de ataque al que se someten ambas versiones es exactamente el mismo:
+Por último, se recomienda repetir el ataque modificando el fichero [`Dockerfile`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-PSK/internal/wireless/AP/Dockerfile) para cambiar la configuración actual que usa el protocolo WPA2 (el más robusto de los dos) comentando la línea que hace referencia al archivo `hostapd.conf` con la versión WPA2 y descomentando la referente a WPA (y relanzar el laboratorio para fijar esta modificación). Esto se hace con el objetivo de probar que el vector de ataque al que se someten ambas versiones es exactamente el mismo:
 ![image](https://github.com/user-attachments/assets/652e2717-9ef0-45bc-ac37-54dffd6d83ac)
 
 ```
@@ -116,8 +116,8 @@ La principal contramedida para evitar este tipo de problemas si se quiere seguir
 ```
 X4r!tP7uNv#eLj29qWbR@KmZ8Yx&cDf9G3hTs%uQpL$JaMk0VbnEzHdCrL#oWy
 ```
-Esto hace que los ataques de fuerza bruta sean demasiado costosos, incluso con computadores de alta potencia, llegando a necesitar años para romperla. También sería ideal cambiarla de vez en cuando, aunque sea una medida algo menos práctica. Si se repite el ataque con esta clave es necesario modificar [`internal/wireless/AP/hostapd-WPA.conf`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-PSK/internal/wireless/AP/hostapd-WPA.conf) o [`internal/wireless/AP/hostapd-WPA2.conf`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-PSK/internal/wireless/AP/hostapd-WPA2.conf) (según la versión usada) para cambiar esta contraseña en el punto de acceso, así como en los [`internal/wireless/client12/wpa_supplicant.conf
-`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-PSK/internal/wireless/client12/wpa_supplicant.conf)/[`internal/wireless/client3/wpa_supplicant.conf`](https://github.com/Carlosdm06/TFG-Pentesting/blob/WPA/WPA2-PSK/internal/wireless/client3/wpa_supplicant.conf)) de los respectivos clientes necesarios para generar los *hand shakes* y finalmente relanzar el laboratorio. De esta forma, se puede apreciar que la lista ya no contiene esta contraseña y, por tanto, no puede encontrar la clave del punto de acceso:
+Esto hace que los ataques de fuerza bruta sean demasiado costosos, incluso con computadores de alta potencia, llegando a necesitar años para romperla. También sería ideal cambiarla de vez en cuando, aunque sea una medida algo menos práctica. Si se repite el ataque con esta clave es necesario modificar [`internal/wireless/AP/hostapd-WPA.conf`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-PSK/internal/wireless/AP/hostapd-WPA.conf) o [`internal/wireless/AP/hostapd-WPA2.conf`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-PSK/internal/wireless/AP/hostapd-WPA2.conf) (según la versión usada) para cambiar esta contraseña en el punto de acceso, así como en los [`internal/wireless/client12/wpa_supplicant.conf
+`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-PSK/internal/wireless/client12/wpa_supplicant.conf)/[`internal/wireless/client3/wpa_supplicant.conf`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/blob/WPA/WPA2-PSK/internal/wireless/client3/wpa_supplicant.conf)) de los respectivos clientes necesarios para generar los *hand shakes* y finalmente relanzar el laboratorio. De esta forma, se puede apreciar que la lista ya no contiene esta contraseña y, por tanto, no puede encontrar la clave del punto de acceso:
 ![image](https://github.com/user-attachments/assets/27f4bc05-99bd-4657-831e-5bd267923ee7)
 
 ```
@@ -139,7 +139,7 @@ aircrack-ng -w /usr/share/wordlists/rockyou.txt -b 02:00:00:00:00:00 wpa-wpa2*.c
 
 Pero para que esto sea realmente eficaz hay que asegurarse también de que la clave no esté en este tipo de listas o no contenga información personal fácilmente identificable por los atacantes. Por otro lado, se podría considerar la actualización a otros protocolos de seguridad como las versiones Enterprise que se verán a continuación (especialmente pensadas para corporaciones) o WPA3, la versión más actual y robusta de este protocolo.
 
-`Recordatorio: ` Se aconseja repetir los [ataques](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks) realizados tras conseguir acceso con la configuración de este capítulo para ver que una vez dentro la seguridad elegida en el punto de acceso es irelevante, permitiendo así los mismos resultados. 
+`Recordatorio: ` Se aconseja repetir los [ataques](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks) realizados tras conseguir acceso con la configuración de este capítulo para ver que una vez dentro la seguridad elegida en el punto de acceso es irelevante, permitiendo así los mismos resultados. 
 
-[`Lección anterior, ataques tras conseguir acceso`](https://github.com/Carlosdm06/TFG-Pentesting/tree/Attacks)
-[`Siguiente lección, cracking de redes WPS`](https://github.com/Carlosdm06/TFG-Pentesting/tree/WPS)
+[`Lección anterior, ataques tras conseguir acceso`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/Attacks)
+[`Siguiente lección, cracking de redes WPS`](https://github.com/carlosdomim02/Wi-Fi-Hacking-Course/tree/WPS)
